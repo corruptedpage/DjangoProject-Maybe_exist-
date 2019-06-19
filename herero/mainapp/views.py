@@ -13,3 +13,6 @@ def katalog(request):
 
 def main(request):
     return render(request, 'mainapp/main.html')
+
+def here(request):
+    return render(request, 'mainapp/!!.html')
