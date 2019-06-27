@@ -1,4 +1,4 @@
-"""herero URL Configuration
+"""geekshop URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -15,10 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-import mainapp.views
+from django.conf.urls import include
+from mainapp import views as mainapp
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
+    path('', mainapp.main, name='main'),
+    path('products/', include('mainapp.urls', namespace='products')),
+    path('basket/', include('basketapp.urls', namespace='basket')),
+    path('auth/', include('authuser.urls', namespace='auth')),
+    path('admin_custom/', include('adminapp.urls', namespace='admin_custom')),
     path('admin/', admin.site.urls),
-    path('katalog/', mainapp.views.katalog),
-    path('', mainapp.views.main),
-    path('!!/', mainapp.views.main)
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
